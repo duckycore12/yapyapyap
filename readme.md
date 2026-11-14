@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="assets/Banner.png" alt="yapplusplusbanner" width="400" />
-</p>
-
 <h1 align="center">😼 Yap Yap Yap 😼</h1>
 
 <p align="center">
