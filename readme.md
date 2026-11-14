@@ -2,10 +2,10 @@
   <img src="assets/Banner.png" alt="yapplusplusbanner" width="400" />
 </p>
 
-<h1 align="center">😼 Yap++ 😼</h1>
+<h1 align="center">😼 Yap Yap Yap 😼</h1>
 
 <p align="center">
-  The cutest client modification for <a href="https://www.yapin.gg">Yappin'</a>.
+  The Best Client Modifier for <a href="https://www.yapin.gg">Yappin'</a>.
 </p>
 <div align="center">
 
@@ -19,22 +19,22 @@
 
 <hr>
 
-Yap++ is an open-source client modification for ~~Yapper~~ Yappin'.
+Yap Yap Yap is an open-source client modification for ~~Yapper~~ Yappin'.
 
-You can contribute code to me via **DM'ing me directly via yapper** or discord. Keep in mind that I usually respond later on Discord. (Don't email me I never check my email)
+You can contribute code to me via **DM'ing me directly via yapin'** or discord both @duckycore12. Keep in mind that I usually respond later on Discord. (Don't email me I never check my email)
 
 I'm also looking for ways to make a team with Antic; but antic hates me..
 
 > [!NOTE]  
-> Windows smartscreen will display: "Are you sure you want to run this app?", This is because yap++ is not signed with a 300 dollar certificate. I will plan on signing it with other certificate options to minimize this. If you are on windows 11 25H2 then you can toggle SMART-APP-CONTROL in settings to be able to run yap++ if SAC won't let you.
+> Windows smartscreen will display: "Are you sure you want to run this app?", This is because Yap Yap Yap is not signed with a 300 dollar certificate. I will plan on signing it with other certificate options to minimize this. If you are on windows 11 25H2 then you can toggle SMART-APP-CONTROL in settings to be able to run Yap Yap Yap if SAC won't let you.
 
-## Download Yap++ in [Releases](https://github.com/salami-reborn/yapplusplus/releases)
+## Download Yap Yap Yap in [Releases](https://github.com/duckycore12/YapYapYap/releases)
 ## Contributing
 
 Contributions are always welcome!
 Please adhere to this project's `code of conduct`:
 
-* **No** API-calls to anywhere except image-hosting services and yapper's own supabase.
+* **No** API-calls to anywhere except image-hosting services and yapin's own supabase.
 * **No** Contributing raiding/spamming plugins.
 * **No** Contributing any plugins that directly break the TOS of yappin'
 * **No** Contributing plugins that directly or indirectly have the slightest chance of harming the user's computer.
@@ -44,12 +44,12 @@ If you break any of these rules while trying to contribute software to yap++, Th
 If you want to contribute but first test out your plugin, Then you have to self-build the app.
 
 ```bash
-  git clone https://github.com/salami-reborn/yapplusplus
+  git clone https://github.com/duckycore12/YapYapYap
   npm install
   npm start
 ```
 
 Common bugs & how to fix:
 * Can't get other files like my customplugin because I updated:
- * `npm run clean` (make sure yap++ is closed or it wont run)
+ * `npm run clean` (make sure Yap Yap Yap is closed or it wont run)
     
