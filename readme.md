@@ -11,7 +11,7 @@
 </div>
 
 > [!WARNING]  
-> Yap Yap Yap is **NOT** affiliated with Yappin/Yapper. Yap++ is a community-made client-side modification for the Yappin app.
+> Yap Yap Yap is **NOT** affiliated with Yappin/Yapper. Yap Yap Yap is a community-made client-side modification for the Yappin app.
 
 <hr>
 
