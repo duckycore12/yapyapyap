@@ -2,30 +2,32 @@ const { app, BrowserWindow, ipcMain, Menu, shell, desktopCapturer, session } = r
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const hotdir = process.env.YAPPLUS_HOT_DIR;
-const appdir = process.env.YAPPLUS_APP_DIR;
+
+const hotdir = process.env.YAPYAPYAP_HOT_DIR || process.env.YAPPLUS_HOT_DIR;
+const appdir = process.env.YAPYAPYAP_APP_DIR || process.env.YAPPLUS_APP_DIR || __dirname;
 const internalhosts = ['yapper.website', 'yapin.gg'];
 const externalprotocols = ['http:', 'https:', 'mailto:', 'tel:'];
 const passprotocols = ['blob:', 'about:', 'devtools:'];
 
-
-
+const REPO_OWNER = 'duckycore12';
+const REPO_NAME = 'yapplusplus';
+const REPO_BRANCH = 'main';
+const USER_AGENT = 'YapYapYap-App';
 
 async function updatebadges() {
     if (!hotdir) return;
     try {
-        const rawurl = `https://raw.githubusercontent.com/salami-reborn/yapplusplus/main/plugins/badges.js?t=${Date.now()}`;
-        const response = await fetch(rawurl, { headers: { 'User-Agent': 'YapPlusPlus-App' } });
+        const rawurl = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_BRANCH}/plugins/badges.js?t=${Date.now()}`;
+        const response = await fetch(rawurl, { headers: { 'User-Agent': USER_AGENT } });
         if (!response.ok) return;
         const remotebuffer = Buffer.from(await response.arrayBuffer());
         const localpath = path.join(hotdir, 'plugins', 'badges.js');
         if (fs.existsSync(localpath)) {
-            if (fs.readFileSync(localpath).equals(remotebuffer)) return; 
+            if (fs.readFileSync(localpath).equals(remotebuffer)) return;
         }
         fs.mkdirSync(path.dirname(localpath), { recursive: true });
         fs.writeFileSync(localpath, remotebuffer);
-    } catch (e) {
-    }
+    } catch (e) {}
 }
 
 function parseurl(url) {
@@ -35,22 +37,20 @@ function parseurl(url) {
         return null;
     }
 }
+
 function isinternal(url) {
     const parsed = parseurl(url);
     if (!parsed) return false;
     if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') return false;
     return internalhosts.some(h => parsed.hostname === h || parsed.hostname.endsWith('.' + h));
 }
+
 function openexternal(url) {
     const parsed = parseurl(url);
     if (!parsed || !externalprotocols.includes(parsed.protocol)) return false;
     shell.openExternal(parsed.href).catch(() => {});
     return true;
 }
-
-
-
-
 
 app.on('web-contents-created', (event, contents) => {
     contents.setWindowOpenHandler(({ url }) => {
@@ -66,7 +66,7 @@ app.on('web-contents-created', (event, contents) => {
         navevent.preventDefault();
         openexternal(target);
     };
-    
+
     contents.on('will-navigate', guard);
     contents.on('will-redirect', guard);
 });
@@ -78,8 +78,6 @@ function resolve(relpath) {
     }
     return path.join(appdir, relpath);
 }
-
-
 
 function getplugincode() {
     const dirs = [
@@ -94,7 +92,7 @@ function getplugincode() {
             if (file.endsWith('.js') && !seen.has(file)) {
                 seen.add(file);
                 try {
-                    combinedcode += `\n// [Libyapcore] [P.L]> ${file} >.<\n`;
+                    combinedcode += `\n// [Libyapyapyap] [P.L]> ${file} >.<\n`;
                     combinedcode += fs.readFileSync(path.join(dir, file), 'utf-8') + '\n';
                 } catch (e) {}
             }
@@ -146,6 +144,7 @@ ipcMain.handle('get-asset', (event, assetname) => {
 
 ipcMain.handle('save-custom-plugin', async (event, filename, code) => {
     try {
+        if (!hotdir) return { success: false, error: 'YAPYAPYAP_HOT_DIR is not set' };
         if (!filename.endsWith('.js')) filename += '.js';
         const pluginshotdir = path.join(hotdir, 'plugins');
         if (!fs.existsSync(pluginshotdir)) fs.mkdirSync(pluginshotdir, { recursive: true });
@@ -184,13 +183,11 @@ async function gettree(repoowner, reponame, branch, headers) {
 }
 
 async function update() { // contribution by @duckycore12
-    const repoowner = 'salami-reborn';
-    const reponame = 'yapplusplus';
-    const branch = 'main';
-    const headers = { 'User-Agent': 'YapPlusPlus-App' };
+    if (!hotdir) return { success: false, error: 'YAPYAPYAP_HOT_DIR is not set' };
+    const headers = { 'User-Agent': USER_AGENT };
 
     try {
-        const tree = await gettree(repoowner, reponame, branch, headers);
+        const tree = await gettree(REPO_OWNER, REPO_NAME, REPO_BRANCH, headers);
 
         const safepaths = /^(app\.js|main\.js|preload\.js|html\/client\.html|assets\/.*|plugins\/.*|themes\/.*)$/;
         const files = tree.filter(f => f.type === 'blob' && safepaths.test(f.path));
@@ -208,7 +205,7 @@ async function update() { // contribution by @duckycore12
 
         async function download(file) {
             // raw.githubusercontent.com is not subject to the API rate limit
-            const rawurl = `https://raw.githubusercontent.com/${repoowner}/${reponame}/${branch}/${file.path.split('/').map(encodeURIComponent).join('/')}`;
+            const rawurl = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_BRANCH}/${file.path.split('/').map(encodeURIComponent).join('/')}`;
             try {
                 const res = await fetch(rawurl, { headers });
                 if (!res.ok) throw new Error(String(res.status));
@@ -262,7 +259,7 @@ ipcMain.handle('restart-app', () => {
 
 app.whenReady().then(async () => {
     Menu.setApplicationMenu(null);
-    await updatebadges(); 
+    await updatebadges();
 
     session.defaultSession.setDisplayMediaRequestHandler(async (request, callback) => {
         try {
@@ -271,7 +268,7 @@ app.whenReady().then(async () => {
             const pickerwindow = new BrowserWindow({
                 width: 800,
                 height: 600,
-                title: 'Select Screen to Share',
+                title: 'YAP YAP YAP — Select Screen to Share',
                 autoHideMenuBar: true,
                 alwaysOnTop: true,
                 webPreferences: {
@@ -279,8 +276,6 @@ app.whenReady().then(async () => {
                     contextIsolation: false
                 }
             });
-
-
 
             let sourcesdata = sources.map(s => ({
                 id: s.id,
@@ -332,11 +327,13 @@ app.whenReady().then(async () => {
             callback({});
         }
     });
+
     const preloadpath = resolve('preload.js').replace(/\\/g, '/');
     const clientpath = resolve('html/client.html');
     const mainwindow = new BrowserWindow({
         width: 1200,
         height: 800,
+        title: 'YAP YAP YAP',
         autoHideMenuBar: true,
         icon: path.join(appdir, 'assets', 'Icon.ico'),
         webPreferences: {
@@ -350,8 +347,6 @@ app.whenReady().then(async () => {
 
     mainwindow.loadFile(clientpath);
 });
-
-
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
