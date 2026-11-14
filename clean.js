@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 const pkg = require('./package.json');
-const appName = "Yap++"
+const appName = "Yap Yap Yap"
 const appDataPath = process.platform === 'win32'
   ? path.join(process.env.APPDATA, appName)
   : process.platform === 'darwin'
