@@ -1,8 +1,8 @@
 {
-  "name": "yapplusplus",
-  "productName": "Yap++",
+  "name": "yapyapyap",
+  "productName": "Yap Yap Yap",
   "version": "1.0.0",
-  "description": "The cutest client modification for Yapper.",
+  "description": "The Best client modification for Yapin.",
   "main": "app.js",
   "scripts": {
     "start": "electron-forge start",
@@ -11,7 +11,7 @@
     "clean": "node clean.js"
   },
   "keywords": [],
-  "author": "salami",
+  "author": "DUCKY",
   "license": "MIT",
   "type": "commonjs",
   "devDependencies": {
